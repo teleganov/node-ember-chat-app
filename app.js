@@ -4,11 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var debug = require('debug')('node-chat-app');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var socket = require('socket.io');
+var http = require('http');
+
+app.set('port', process.env.PORT || 3000);
+
+var server = http.createServer(app);
+var io = socket.listen(server);
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,20 +34,30 @@ app.use(cookieParser());
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
-  indentedSyntax: true,
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
-app.use('/users', users);
+app.use('/users/', users);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('chat', function(msg) {
+    console.log(msg);
+    var pkt = {message: msg['message'], id: msg['id']};
+    io.emit('chat', pkt);
+  });
+  socket.on('disconnect', function() {
+    console.log('a user disconnected');
+  });
+});
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+//app.use(function(req, res, next) {
+//  var err = new Error('Not Found');
+//  err.status = 404;
+//  next(err);
+//});
 
 // error handlers
 
@@ -62,5 +83,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+server.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
 
 module.exports = app;

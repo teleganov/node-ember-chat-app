@@ -1,0 +1,113 @@
+body {
+  background-color: #2a2634;
+  font-family: 'Cabin';
+  font-weight: 400;
+  color: white;
+  padding-top: 48px;
+}
+
+#nav-container {
+  text-align: center;
+  background-color: #373242;
+  position: fixed;
+  height: 48px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  font-size: 24px;
+  padding-top: 12px;
+  color: #d3d1e9;
+}
+
+#chatbox-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+#chatbox-messages-wrapper {
+  overflow-y: scroll;
+  height: 320px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+#chatbox-list {
+  list-style: none;
+  padding: 0;
+}
+
+.chatbox-message {
+  color: #e8e6ff;
+  text-align: right;
+  margin-bottom: 6px;
+  &.mine {
+    .chatbox-message-inner {
+      background-color: #605774;
+    }
+    text-align: left;
+  }
+  &.ng-enter {
+    transition: 0.2s;
+    opacity: 0;
+    margin-left: -500px;
+    &.ng-enter-active {
+      opacity: 1;
+      margin-left: 0px;
+    }
+  }
+}
+.chatbox-message-inner {
+  background-color: #464055;
+  border-bottom: 1px solid #373440;
+  height: auto;
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 4px;
+  max-width: 90%;
+  text-align: left;
+  white-space: pre-wrap;      /* CSS3 */
+  white-space: -moz-pre-wrap; /* Firefox */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  word-wrap: break-word;      /* IE */
+}
+
+#chatbox-text-container {
+
+}
+
+#floating-triangle {
+  color: #464055;
+  float: left;
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+#chatbox-input {
+  appearance: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #635782;
+  background: none;
+  color: #e8e6ff;
+  transition: 0.2s;
+  margin-left: -11px;
+  float: left;
+  padding: 4px 0 4px 21px;
+  width: 99%;
+  &:focus, &:active {
+    outline: none;
+    border-bottom: 1px solid #c7b2ff;
+  }
+}
+
+#chatbox-send-button {
+
+}
+
+::-webkit-input-placeholder{ color: #564e68; }
+:-moz-placeholder{ color: #564e68; }
+::-moz-placeholder{ color: #564e68; }
+:-ms-input-placeholder{ color: #564e68; }
