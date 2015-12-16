@@ -52,10 +52,8 @@ body {
   &.ng-enter {
     transition: 0.2s;
     opacity: 0;
-    margin-left: -500px;
     &.ng-enter-active {
       opacity: 1;
-      margin-left: 0px;
     }
   }
 }

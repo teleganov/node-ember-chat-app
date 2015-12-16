@@ -1,9 +1,13 @@
-angular.module('chat').controller('MainController', function ($scope, socket) {
+angular.module('chat').controller('MainController', function ($scope, $cookies, socket) {
   $scope.messages = [];
   $scope.newMessage = "";
   $scope.showError = false;
   $scope.errorMsg = "";
-  $scope.userId = guidGenerator();
+  $scope.userId = $cookies.get('userId');
+  if(!$scope.userId) {
+    $cookies.put('userId', guidGenerator());
+    $scope.userId = $cookies.get('userId');
+  }
 
   $scope.sendMessage = function() {
     if($scope.newMessage.length > 0) {

@@ -1,7 +1,8 @@
 var App = angular.module('chat', [
   'ngRoute',
   'luegg.directives',
-  'ngAnimate'
+  'ngAnimate',
+  'ngCookies'
 ]);
 
 App.factory('socket', ['$rootScope', function ($rootScope) {
