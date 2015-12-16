@@ -40,11 +40,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users/', users);
 
+var lastMessages = [];
 io.on('connection', function(socket){
   console.log('a user connected');
+  socket.emit('last messages', {lastMessages: lastMessages});
   socket.on('chat', function(msg) {
-    console.log(msg);
     var pkt = {message: msg['message'], id: msg['id']};
+    if(lastMessages.length >= 24) {
+      lastMessages = lastMessages.slice(1, lastMessages.length);
+      lastMessages.push(pkt);
+    } else {
+      lastMessages.push(pkt);
+    }
     io.emit('chat', pkt);
   });
   socket.on('disconnect', function() {

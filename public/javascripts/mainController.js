@@ -18,6 +18,14 @@ angular.module('chat').controller('MainController', function ($scope, socket) {
   socket.on('chat', function(msg){
     $scope.messages.push({message: msg['message'], id: msg['id']});
   });
+
+  socket.on('last messages', function(msg){
+    if(msg['lastMessages'].length > 0) {
+      msg['lastMessages'].forEach(function(message) {
+        $scope.messages.push(message);
+      });
+    }
+  });
 });
 
 function guidGenerator() {
